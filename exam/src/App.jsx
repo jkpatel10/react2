@@ -1,7 +1,4 @@
 import React from 'react'
-// import Crud from './components/Crud'
-// import { Provider } from 'react-redux'
-// import { store } from './store/store'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -17,9 +14,6 @@ export default function App() {
            <Route path='/dashboard' Component={Dashboard}></Route>
          </Routes>
       </BrowserRouter>
-      {/* <Provider store={store}>
-        <Crud />
-      </Provider> */}
     </div>
   )
 }

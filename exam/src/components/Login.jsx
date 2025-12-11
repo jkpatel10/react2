@@ -27,13 +27,12 @@ export default function Login() {
     
   return (
     <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-2xl shadow-lg border">
-  {/* Header */}
+
   <div className="mb-6 text-center">
     <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
     <p className="text-gray-500 mt-2">Sign in to your account</p>
   </div>
 
-  {/* Form */}
   <div className="space-y-4">
     <input
       type="email"
@@ -57,14 +56,12 @@ export default function Login() {
     </button>
   </div>
 
-  {/* Link to Register */}
   <p className="text-center text-gray-500 mt-6">
-    Don’t have an account?{" "}
+    Don't have an account?{" "}
     <Link to={"/"} className="text-[#ffb400] font-semibold hover:underline">
       Create an Account
     </Link>
   </p>
 </div>
-
   )
 }

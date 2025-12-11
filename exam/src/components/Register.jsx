@@ -56,8 +56,7 @@ export default function Register() {
 
   <button
     onClick={handleRegister}
-    className="w-full bg-[#ffb400] hover:bg-[#e6a200] text-black py-3 rounded-xl font-semibold mb-4"
-  >
+    className="w-full bg-[#ffb400] hover:bg-[#e6a200] text-black py-3 rounded-xl font-semibold mb-4">
     Create Account
   </button>
 
@@ -68,6 +67,5 @@ export default function Register() {
     </Link>
   </p>
 </div>
-
     )
 }

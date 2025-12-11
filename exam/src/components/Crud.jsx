@@ -11,6 +11,9 @@ const imgs = {
 export default function ApiData() {
 const [formData,setFormData] = useState({})
 const [editIndex, setEditIndex] = useState(null);
+const [search, setSearch] = useState('');
+const [cat, setCat] = useState('all');
+const [sort, setSort] = useState('');
 const dispatch = useDispatch()
 
 useEffect(()=>{ 
@@ -62,6 +65,28 @@ const handleEdit = (id) => {
   setEditIndex(id);
 };
 
+const searchedData = response.record && response.record.filter(
+  (item) =>
+    item?.name?.toLowerCase().includes(search.toLowerCase())
+);
+
+const filteredData = [...(searchedData || [])].filter((item) => {
+  if (cat == "all") {
+    return item;
+  } else {
+    return item.name.includes(cat);
+  }
+});
+
+const sortedData = [...filteredData].sort((a, b) => {
+  if (sort == "asc") {
+    return a.time - b.time ;
+  } else if (sort == "desc") {
+    return b.time - a.time ;
+  }
+  return 0;
+});
+
    return(<div className="min-h-screen bg-[#fffdf7]">
 
   <nav className="w-full bg-white shadow-sm py-4 sticky top-0 z-50">
@@ -88,18 +113,40 @@ const handleEdit = (id) => {
     </button>
   </section>
 
-  <div className="max-w-xl mx-auto mt-10">
+  <div className="flex justify-center items-center gap-10 m-15">
     <input
       type="text"
       placeholder="Search recipes..."
-      className="w-full p-4 rounded-xl border shadow-sm focus:outline-none focus:ring-2 ring-[#ffb400]"
+      className="w-120 p-4 rounded-xl border shadow-sm focus:outline-none focus:ring-2 ring-[#ffb400]"
+      onChange={(e) => setSearch(e.target.value)}
     />
+
+    <select
+      value={cat}
+      onChange={(e) => setCat(e.target.value)}
+      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5"
+    >
+      <option hidden>Select Category</option>
+      <option value="all">All</option>
+      <option value="salad">salad</option>
+      <option value="pizza">pizza</option>
+      <option value="momos">momos</option>
+      <option value="dessert">dessert</option>
+      <option value="pasta">pasta</option>
+    </select>
+
+    <select
+      value={sort}
+      onChange={(e) => setSort(e.target.value)}
+      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5"
+    >
+      <option hidden>Time</option>
+      <option value="asc">Low to High</option>
+      <option value="desc">High to Low</option>
+    </select>
   </div>
-
-  <div className="max-w-5xl mx-auto mt-10 px-6">
-    <h3 className="text-2xl font-bold text-gray-800 mb-4">Categories</h3>
-
-    <div className="grid grid-cols-3 sm:grid-cols-6 gap-5">
+<div className="max-w-5xl mx-auto mt-10 px-6">
+    <div className="grid grid-cols-3 sm:grid-cols-6 gap-5" data-aos="zoom-in-up" data-aos-duration="1500">
       {[
         "salad",
         "pizza",
@@ -108,8 +155,8 @@ const handleEdit = (id) => {
         "pasta"
       ].map((cat, i) => (
         <div
-          key={i}
-          className="bg-white rounded-xl p-4 shadow hover:shadow-md transition border text-center"
+          key={i} 
+          className="bg-white rounded-xl p-4 shadow hover:shadow-xl hover:bg-yellow-400 transition border text-center"
         >
           <p className="text-sm font-semibold">{cat}</p>
         </div>
@@ -156,12 +203,12 @@ const handleEdit = (id) => {
   </div>
 
  <div className="max-w-7xl mx-auto mt-16 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-  {response.record &&
-    response.record.map((e, i) => {
+  {sortedData &&
+    sortedData.map((e, i) => {
       const imageUrl = imgs[e.name]
 
       return (
-        <div
+        <div data-aos="fade-up-right" data-aos-duration="1000"
           key={i}
           className="bg-white rounded-2xl shadow-lg border overflow-hidden hover:shadow-xl transition"
         >
